@@ -13,63 +13,84 @@ I used a modern stack to build this, focusing on speed and security.
 
 **Backend (Smart Contracts):**
 - **Solidity:** The core logic.
-- **Foundry:** For blazing fast testing and deployment (moved away from Hardhat for this one!).
+- **Foundry:** For blazing fast testing and deployment.
 - **Chainlink VRF:** To ensure the random winner selection is tamper-proof.
 - **Chainlink Automation:** To automatically trigger the winner selection without manual admin input.
 
 **Frontend:**
 - **React.js (Vite):** For a fast, responsive UI.
 - **Ethers.js (v6):** To connect the website to the blockchain.
-- **Tailwind CSS:** For styling (built that dashboard look from scratch!).
+- **Tailwind CSS:** For styling (built the dashboard look from scratch!).
 
-## 🌟 Key Features
-- **Buy Tickets:** Users can enter the raffle by sending 0.01 Sepolia ETH.
-- **Live Updates:** The UI updates the "Players" count and "Prize Pool" in real-time.
-- **Verifiably Random:** The winner isn't picked by me—it's picked by Chainlink's random number generator.
-- **Automated:** The lottery runs itself. When the timer hits zero, a winner is picked and paid automatically.
-- **Wallet History:** Keeps track of your recent transactions locally so you can see your entries.
+---
 
-## 🚀 How to Run Locally
+## 🚀 How to Run This Project Locally
 
-Since this is a full-stack project, you'll need two terminals open.
+Since this is a Web3 project, you can run the entire thing on your local machine and interact with the **Sepolia Testnet**.
 
 ### Prerequisites
-- [Foundry](https://getfoundry.sh/) installed.
-- [Node.js](https://nodejs.org/) & NPM installed.
-- A customized `.env` file (see below).
+Before you begin, ensure you have the following installed:
+* [Node.js](https://nodejs.org/) (v18 or higher)
+* [Foundry](https://getfoundry.sh/) (for smart contracts)
+* [MetaMask](https://metamask.io/) browser extension
 
-### 1. Clone & Setup Backend
+### Step 1: Clone the Repository
 ```bash
 git clone [https://github.com/Sarnav07/foundry-lottery-sepolia.git](https://github.com/Sarnav07/foundry-lottery-sepolia.git)
 cd foundry-lottery-sepolia
+Step 2: Setup the Smart Contract
+Install Dependencies:
+
+Bash
+
 forge install
-2. Deploy Contract (Sepolia)
-Make sure you have a .env file with SEPOLIA_RPC_URL and PRIVATE_KEY.
+Setup Environment Variables: Create a .env file in the root folder and add your Sepolia RPC URL and Private Key:
+
+Code snippet
+
+SEPOLIA_RPC_URL=[https://eth-sepolia.g.alchemy.com/v2/YOUR_API_KEY](https://eth-sepolia.g.alchemy.com/v2/YOUR_API_KEY)
+PRIVATE_KEY=your_private_key_here
+Deploy to Sepolia: Run this command to deploy the contract to the testnet:
 
 Bash
 
 source .env
 forge script script/DeployLottery.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast
-After deployment, copy the contract address from the terminal.
+🚨 IMPORTANT: Copy the Contract Address from the terminal output after deployment. You will need it for the next step.
 
-3. Setup Frontend
+Step 3: Setup the Frontend
+Navigate to the frontend folder:
+
 Bash
 
 cd frontend
 npm install
-Open constants.js and replace the contract address with the one you just deployed.
+Connect the Frontend to Your Contract:
+
+Open src/constants.js (or App.jsx depending on where you saved it).
+
+Find the variable contractAddresses.
+
+Paste your new Contract Address inside the entry for Sepolia (11155111).
+
+Start the Website:
 
 Bash
 
 npm run dev
-Visit http://localhost:5173 and connect your MetaMask!
+Step 4: Play!
+Open your browser and go to http://localhost:5173.
+
+Connect your MetaMask wallet (make sure you are on the Sepolia Network).
+
+Click "Buy Ticket" to send a transaction!
 
 🧠 What I Learned
 Building this was a huge learning curve. Here are the biggest takeaways:
 
 Foundry vs Hardhat: I really enjoyed using Solidity for writing deployment scripts instead of JavaScript. It feels much more native.
 
-State Management: syncing the blockchain state (slow) with the React frontend state (fast) was tricky, especially handling "Pending" transactions.
+State Management: Syncing the blockchain state (slow) with the React frontend state (fast) was tricky, especially handling "Pending" transactions.
 
 The "0 ETH" Error: I spent a good amount of time debugging why my frontend wasn't fetching data, only to realize I was pointing to the wrong contract address. Lesson learned: always double-check your constants!
 
@@ -78,4 +99,6 @@ The "0 ETH" Error: I spent a good amount of time debugging why my frontend wasn'
 
 [ ] Allow users to buy multiple tickets in one transaction.
 
-[ ] Deploy to a mainnet (Optimism or Arbitrum).
+[ ] Deploy the frontend to Vercel/IPFS.
+
+Built with ❤️ by Sarnav. If you spot any bugs, feel free to open an issue—I'm still learning!
