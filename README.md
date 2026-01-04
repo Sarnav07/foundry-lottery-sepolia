@@ -1,3 +1,7 @@
+check out the web : https://foundry-lottery-sepolia-jv4w.vercel.app/
+
+
+
 # 🎰 Decentralized Lottery (Sepolia)
 
 ## 👋 About This Project
